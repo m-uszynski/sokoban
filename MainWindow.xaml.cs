@@ -125,8 +125,10 @@ namespace SokobanGraph
             }
             p.moveCount = 0;
             p.moveBoxCount = 0;
+            p.backMovementCount = 0;
             mw.playerMove.Content = "Ruchy: " + p.moveCount;
             mw.boxMove.Content = "Przesunięcia: " + p.moveBoxCount;
+            mw.backMove.Content = "Cofnięcia: " + p.backMovementCount;
         }
 
         public bool isWin()
@@ -287,37 +289,37 @@ namespace SokobanGraph
                     }
                     if (previousPlayerMove == 0)
                     {
-                        reDrawPlayerTo(p.X, p.Y + 1,"Down");
+                        reDrawPlayerTo(p.X, p.Y + 1,"Down",true);
                         if (previousBoxMove == 0)
                         {
-                            reDrawBoxFromTo(p.X, p.Y - 2, p.X, p.Y - 1);
+                            reDrawBoxFromTo(p.X, p.Y - 2, p.X, p.Y - 1,true);
                             if (isObject(p.X, p.Y - 2, "glocation")) drawGoalLocation(p.X, p.Y - 2);
                         }
                     }
                     if (previousPlayerMove == 1)
                     {
-                        reDrawPlayerTo(p.X, p.Y - 1,"Up");
+                        reDrawPlayerTo(p.X, p.Y - 1,"Up",true);
                         if (previousBoxMove == 1)
                         {
-                            reDrawBoxFromTo(p.X, p.Y + 2, p.X, p.Y + 1);
+                            reDrawBoxFromTo(p.X, p.Y + 2, p.X, p.Y + 1,true);
                             if (isObject(p.X, p.Y + 2, "glocation")) drawGoalLocation(p.X, p.Y + 2);
                         }
                     }
                     if (previousPlayerMove == 2)
                     {
-                        reDrawPlayerTo(p.X + 1, p.Y,"Right");
+                        reDrawPlayerTo(p.X + 1, p.Y,"Right",true);
                         if (previousBoxMove == 2)
                         {
-                            reDrawBoxFromTo(p.X - 2, p.Y, p.X - 1, p.Y);
+                            reDrawBoxFromTo(p.X - 2, p.Y, p.X - 1, p.Y,true);
                             if (isObject(p.X - 2, p.Y, "glocation")) drawGoalLocation(p.X - 2, p.Y);
                         }
                     }
                     if (previousPlayerMove == 3)
                     {
-                        reDrawPlayerTo(p.X - 1, p.Y,"Left");
+                        reDrawPlayerTo(p.X - 1, p.Y,"Left",true);
                         if (previousBoxMove == 3)
                         {
-                            reDrawBoxFromTo(p.X + 2, p.Y, p.X + 1, p.Y);
+                            reDrawBoxFromTo(p.X + 2, p.Y, p.X + 1, p.Y,true);
                             if (isObject(p.X + 2, p.Y, "glocation")) drawGoalLocation(p.X + 2, p.Y);
                         }
                     }
@@ -338,7 +340,7 @@ namespace SokobanGraph
             }
         }
 
-        private void reDrawBoxFromTo(int bx, int by, int x, int y)
+        private void reDrawBoxFromTo(int bx, int by, int x, int y, bool isBackMovement = false)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
             Box b = Board.boxes.Find(a => a.X == bx && a.Y == by);
@@ -347,20 +349,27 @@ namespace SokobanGraph
             b.ClearPrevious();
             b.X = x;
             b.Y = y;
-            p.moveBoxCount++;
+            if (!isBackMovement) p.moveBoxCount++;
+            else p.moveBoxCount--;
             mw.boxMove.Content = "Przesunięcia: " + p.moveBoxCount;
             if (g != null) b.draw(true);
             else b.draw(false);
         }
 
-        private void reDrawPlayerTo(int x, int y,String direction="Down")
+        private void reDrawPlayerTo(int x, int y,String direction="Down",bool isBackMovement = false)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
             p.ClearPrevious();
             p.X = x;
             p.Y = y;
-            p.moveCount++;
+            if (!isBackMovement) p.moveCount++;
+            else
+            {
+                p.backMovementCount++;
+                p.moveCount--;
+            }
             mw.playerMove.Content = "Ruchy: " + p.moveCount;
+            mw.backMove.Content = "Cofnięcia: " + p.backMovementCount;
             p.draw(direction);
         }
 

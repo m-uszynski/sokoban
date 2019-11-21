@@ -112,6 +112,7 @@
             <Grid>
                 <Label x:Name="playerMove" Content="Ruchy:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="-5.51,8.535"/>
                 <Label x:Name="boxMove" Content="Przesunięcia:" HorizontalAlignment="Left" Margin="5,25,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="backMove" Content="Cofnięcia:" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Opcje" HorizontalAlignment="Left" Height="100" Margin="520,162,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.445,0.43">
