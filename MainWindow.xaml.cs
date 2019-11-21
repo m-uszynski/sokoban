@@ -24,13 +24,11 @@ namespace SokobanGraph
     {
         GameController gc = new GameController();
         Level level = new Level(1);
-        //Board b = new Board();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //level.numberLevel = 3;
             level.generateLevel();
 
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
@@ -42,6 +40,37 @@ namespace SokobanGraph
             gc.updatePosition(e.Key);
         }
 
+        private void backMoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var key = Key.P;
+            var target = Keyboard.FocusedElement;
+            var routedEvent = Keyboard.KeyDownEvent;
+
+            target.RaiseEvent(
+                new KeyEventArgs(
+                    Keyboard.PrimaryDevice,
+                    PresentationSource.FromVisual(this),
+                    0,
+                    key)
+                { RoutedEvent = routedEvent }
+            );
+        }
+
+        private void restartLevel_Click(object sender, RoutedEventArgs e)
+        {
+            var key = Key.R;
+            var target = Keyboard.FocusedElement;
+            var routedEvent = Keyboard.KeyDownEvent;
+
+            target.RaiseEvent(
+                new KeyEventArgs(
+                    Keyboard.PrimaryDevice,
+                    PresentationSource.FromVisual(this),
+                    0,
+                    key)
+                { RoutedEvent = routedEvent }
+            );
+        }
     }
 
     class Board
@@ -158,6 +187,7 @@ namespace SokobanGraph
 
         public void generateLevel()
         {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
             Board.isBoardRestart = true;
             b.clearBoard();
             b.readBoard(numberLevel);
@@ -165,6 +195,8 @@ namespace SokobanGraph
             b.drawBoxes();
             b.drawGLocation();
             b.drawPlayer();
+            mw.levelNumber.Content = "Level " + numberLevel;
+            mw.restartLevel.IsEnabled = false;
         }
 
         public bool isLevelWin()
@@ -204,6 +236,7 @@ namespace SokobanGraph
         public void updatePosition(Key k)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.restartLevel.IsEnabled = true;
             switch (k)
             {
                 case Key.Up:
@@ -326,6 +359,10 @@ namespace SokobanGraph
                     previousPlayerMove = -1;
                     previousBoxMove = -1;
                     mw.backMoveButton.IsEnabled = false;
+                    break;
+
+                case Key.R:
+                    level.generateLevel();
                     break;
             }
         }
