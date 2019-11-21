@@ -28,7 +28,7 @@ namespace SokobanGraph
         public MainWindow()
         {
             InitializeComponent();
-
+            Application.Current.MainWindow = this;
             level.generateLevel();
 
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
@@ -59,6 +59,22 @@ namespace SokobanGraph
         private void restartLevel_Click(object sender, RoutedEventArgs e)
         {
             var key = Key.R;
+            var target = Keyboard.FocusedElement;
+            var routedEvent = Keyboard.KeyDownEvent;
+
+            target.RaiseEvent(
+                new KeyEventArgs(
+                    Keyboard.PrimaryDevice,
+                    PresentationSource.FromVisual(this),
+                    0,
+                    key)
+                { RoutedEvent = routedEvent }
+            );
+        }
+
+        private void quitToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var key = Key.Q;
             var target = Keyboard.FocusedElement;
             var routedEvent = Keyboard.KeyDownEvent;
 
@@ -363,6 +379,12 @@ namespace SokobanGraph
 
                 case Key.R:
                     level.generateLevel();
+                    break;
+
+                case Key.Q:
+                    Menu m = new Menu();
+                    m.Show();
+                    mw.Close();
                     break;
             }
         }

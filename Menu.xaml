@@ -1,0 +1,14 @@
+﻿<Window x:Class="SokobanGraph.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SokobanGraph"
+        mc:Ignorable="d"
+        Title="Menu" Height="300" Width="300">
+    <Grid>
+        <MediaElement x:Name="backgroundMenu" Source="background.wmv" LoadedBehavior="Play" Stretch="UniformToFill"/>
+        <Button x:Name="newGameButton"  Content="Nowa gra" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="newGameButton_Click" Background="#FFBFD9FF" Foreground="#FF0E2572" BorderBrush="#FF08175D" FontSize="16" FontWeight="Bold" FontFamily="Microsoft Sans Serif" BorderThickness="1"/>
+        <Button x:Name="quitButton" Content="Wyjście" HorizontalAlignment="Center" Margin="0,135,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="quitButton_Click" Background="#FFBFD9FF" Foreground="#FF0E2572" BorderBrush="#FF08175D" FontSize="16" FontWeight="Bold" FontFamily="Microsoft Sans Serif" BorderThickness="1"/>
+    </Grid>
+</Window>

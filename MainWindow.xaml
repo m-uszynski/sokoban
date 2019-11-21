@@ -121,10 +121,11 @@
                 <Label x:Name="backMove" Content="Cofnięcia:" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Opcje" HorizontalAlignment="Left" Height="120" Margin="560,115,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.445,0.43">
+        <GroupBox Header="Opcje" HorizontalAlignment="Left" Height="130" Margin="560,115,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.445,0.43">
             <Grid>
                 <Button x:Name="backMoveButton" Content="Cofnij ruch [P]" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="backMoveButton_Click"/>
-                <Button x:Name="restartLevel" Content="Resetuj level [R]" HorizontalAlignment="Left" Margin="10,40,0,20" VerticalAlignment="Top" Width="125" Height="25" Click="restartLevel_Click"/>
+                <Button x:Name="restartLevel" Content="Resetuj level [R]" HorizontalAlignment="Left" Margin="10,40,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="restartLevel_Click"/>
+                <Button x:Name="quitToMenu" Content="Wyjdź do menu [Q]" HorizontalAlignment="Left" Margin="10,70,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="quitToMenu_Click"/>
             </Grid>
         </GroupBox>
 
