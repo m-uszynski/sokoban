@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -45,6 +46,7 @@ namespace SokobanGraph
 
     class Board
     {
+        public static bool isBoardRestart = false;
         public static List<Wall> walls = new List<Wall>();
         public static List<Box> boxes = new List<Box>();
         public static List<GoalLocation> glocations = new List<GoalLocation>();
@@ -112,6 +114,7 @@ namespace SokobanGraph
         public void clearBoard()
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.backMoveButton.IsEnabled = false;
             for (int i=0; i<9; i++)
             {
                 for(int j=0; j<9; j++)
@@ -153,6 +156,7 @@ namespace SokobanGraph
 
         public void generateLevel()
         {
+            Board.isBoardRestart = true;
             b.clearBoard();
             b.readBoard(numberLevel);
             b.drawWalls();
@@ -192,8 +196,12 @@ namespace SokobanGraph
             p = Board.p;
         }
 
+        public int previousPlayerMove = -1;
+        public int previousBoxMove = -1;
+
         public void updatePosition(Key k)
-        {   
+        {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
             switch (k)
             {
                 case Key.Up:
@@ -202,11 +210,15 @@ namespace SokobanGraph
                     {
                         if (!isObject(p.X, p.Y - 2))
                         {
+                            previousBoxMove = 0;
                             reDrawBoxFromTo(p.X, p.Y - 1, p.X, p.Y - 2);
                         }
                         else break;
                     }
-                    reDrawPlayerTo(p.X, p.Y - 1,"Up");
+                    Board.isBoardRestart = false;
+                    mw.backMoveButton.IsEnabled = true;
+                    reDrawPlayerTo(p.X, p.Y - 1, "Up");
+                    previousPlayerMove = 0;
                     checkWin();
                     break;
 
@@ -216,11 +228,15 @@ namespace SokobanGraph
                     {
                         if (!isObject(p.X, p.Y + 2))
                         {
+                            previousBoxMove = 1;
                             reDrawBoxFromTo(p.X, p.Y + 1, p.X, p.Y + 2);
                         }
                         else break;
                     }
-                    reDrawPlayerTo(p.X, p.Y + 1,"Down");
+                    Board.isBoardRestart = false;
+                    mw.backMoveButton.IsEnabled = true;
+                    reDrawPlayerTo(p.X, p.Y + 1, "Down");
+                    previousPlayerMove = 1;
                     checkWin();
                     break;
 
@@ -230,11 +246,15 @@ namespace SokobanGraph
                     {
                         if (!isObject(p.X - 2, p.Y))
                         {
+                            previousBoxMove = 2;
                             reDrawBoxFromTo(p.X - 1, p.Y, p.X - 2, p.Y);
                         }
                         else break;
                     }
+                    Board.isBoardRestart = false;
+                    mw.backMoveButton.IsEnabled = true;
                     reDrawPlayerTo(p.X - 1, p.Y, "Left");
+                    previousPlayerMove = 2;
                     checkWin();
                     break;
 
@@ -244,14 +264,67 @@ namespace SokobanGraph
                     {
                         if (!isObject(p.X + 2, p.Y))
                         {
+                            previousBoxMove = 3;
                             reDrawBoxFromTo(p.X + 1, p.Y, p.X + 2, p.Y);
                         }
                         else break;
                     }
-                    reDrawPlayerTo(p.X + 1, p.Y,"Right");
+                    Board.isBoardRestart = false;
+                    mw.backMoveButton.IsEnabled = true;
+                    reDrawPlayerTo(p.X + 1, p.Y, "Right");
+                    previousPlayerMove = 3;
                     checkWin();
                     break;
-
+                case Key.P:
+                    
+                    if (Board.isBoardRestart)
+                    {
+                        
+                        previousBoxMove = -1;
+                        previousBoxMove = -1;
+                        mw.backMoveButton.IsEnabled = false;
+                        break;
+                    }
+                    if (previousPlayerMove == 0)
+                    {
+                        reDrawPlayerTo(p.X, p.Y + 1,"Down");
+                        if (previousBoxMove == 0)
+                        {
+                            reDrawBoxFromTo(p.X, p.Y - 2, p.X, p.Y - 1);
+                            if (isObject(p.X, p.Y - 2, "glocation")) drawGoalLocation(p.X, p.Y - 2);
+                        }
+                    }
+                    if (previousPlayerMove == 1)
+                    {
+                        reDrawPlayerTo(p.X, p.Y - 1,"Up");
+                        if (previousBoxMove == 1)
+                        {
+                            reDrawBoxFromTo(p.X, p.Y + 2, p.X, p.Y + 1);
+                            if (isObject(p.X, p.Y + 2, "glocation")) drawGoalLocation(p.X, p.Y + 2);
+                        }
+                    }
+                    if (previousPlayerMove == 2)
+                    {
+                        reDrawPlayerTo(p.X + 1, p.Y,"Right");
+                        if (previousBoxMove == 2)
+                        {
+                            reDrawBoxFromTo(p.X - 2, p.Y, p.X - 1, p.Y);
+                            if (isObject(p.X - 2, p.Y, "glocation")) drawGoalLocation(p.X - 2, p.Y);
+                        }
+                    }
+                    if (previousPlayerMove == 3)
+                    {
+                        reDrawPlayerTo(p.X - 1, p.Y,"Left");
+                        if (previousBoxMove == 3)
+                        {
+                            reDrawBoxFromTo(p.X + 2, p.Y, p.X + 1, p.Y);
+                            if (isObject(p.X + 2, p.Y, "glocation")) drawGoalLocation(p.X + 2, p.Y);
+                        }
+                    }
+                    previousPlayerMove = -1;
+                    previousBoxMove = -1;
+                    mw.backMoveButton.IsEnabled = false;
+                    break;
             }
         }
 
@@ -299,11 +372,19 @@ namespace SokobanGraph
             return empty;
         }
 
+        private void drawGoalLocation(int x, int y)
+        {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            var field = (Image)mw.FindName("field" + x + y);
+            field.Source = new BitmapImage(new Uri("pack://application:,,,/sprites/EndPoint_Blue.png"));
+        }
+
         private bool isObject(int x, int y,string obj)
         {
             bool empty = false;
             if (obj == "wall") if (Board.walls.Exists(a => a.X == x && a.Y == y)) empty = true;
             if (obj == "box") if (Board.boxes.Exists(a => a.X == x && a.Y == y)) empty = true;
+            if (obj == "glocation") if (Board.glocations.Exists(a => a.X == x && a.Y == y)) empty = true;
             return empty;
         }
     }
