@@ -25,5 +25,5 @@ This is a simple logic game in which the player pushes crates or boxes around in
 ```
 git clone https://github.com/m-uszynski/sokoban.git
 ```
-* Go to ./bin/Debug location
+* Go to `./bin/Debug` location
 * Run SokobanGraph.exe
