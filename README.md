@@ -1,5 +1,5 @@
 # Sokoban Game
-[(https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)]
+[![](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)]
 This is a simple logic game in which the player pushes crates or boxes around in a warehouse, trying to get them to storage locations.
 
 ## Technologies
