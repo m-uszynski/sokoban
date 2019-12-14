@@ -22,12 +22,22 @@ namespace SokobanGraph
         public Menu()
         {
             InitializeComponent();
+            logo.Source = new BitmapImage(new Uri("pack://application:,,,/sprites/logo.png"));
+            if (System.IO.File.Exists("lastUsername.txt"))
+            {
+                string nick = System.IO.File.ReadAllText("lastUsername.txt");
+                if(nick != "" && nick != null) nickLabel.Text = System.IO.File.ReadAllText("lastUsername.txt");
+            }
         }
 
         private void newGameButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
-            mw.Show();
+            //MainWindow mw = new MainWindow();
+            //mw.Show();
+            string nick = nickLabel.Text;
+            System.IO.File.WriteAllText("lastUsername.txt", nick);
+            LevelChoose lc = new LevelChoose(nick);
+            lc.Show();
             this.Close();
         }
 

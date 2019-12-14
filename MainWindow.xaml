@@ -123,11 +123,23 @@
         </GroupBox>
         <GroupBox Header="Opcje" HorizontalAlignment="Left" Height="130" Margin="560,115,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.445,0.43">
             <Grid>
-                <Button x:Name="backMoveButton" Content="Cofnij ruch [P]" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="backMoveButton_Click"/>
-                <Button x:Name="restartLevel" Content="Resetuj level [R]" HorizontalAlignment="Left" Margin="10,40,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="restartLevel_Click"/>
-                <Button x:Name="quitToMenu" Content="Wyjdź do menu [Q]" HorizontalAlignment="Left" Margin="10,70,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="quitToMenu_Click"/>
+                <Button x:Name="backMoveButton" Content="Cofnij ruch [P]" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="backMoveButton_Click" Cursor="Hand" Background="#FFBFD9FF" Foreground="#FF0E2572" BorderBrush="#FF08175D"/>
+                <Button x:Name="restartLevel" Content="Resetuj level [R]" HorizontalAlignment="Left" Margin="10,40,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="restartLevel_Click" Cursor="Hand" Background="#FFBFD9FF" Foreground="#FF0E2572" BorderBrush="#FF08175D"/>
+                <Button x:Name="quitToMenu" Content="Wyjdź do menu [Q]" HorizontalAlignment="Left" Margin="10,70,0,10" VerticalAlignment="Top" Width="125" Height="25" Click="quitToMenu_Click" Cursor="Hand" Background="#FFBFD9FF" Foreground="#FF0E2572" BorderBrush="#FF08175D"/>
             </Grid>
         </GroupBox>
+        <Label x:Name="timer" Content="Czas: 10 s" HorizontalAlignment="Left" Margin="560,259,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+        <Label x:Name="bestTime" Content="Twój najlepszy czas: -" HorizontalAlignment="Left" Margin="560,296,0,0" VerticalAlignment="Top"/>
 
+        <GroupBox Header="Najlepsi gracze" HorizontalAlignment="Left" Height="130" Margin="560,340,0,0" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.445,0.43">
+            <Grid>
+                <Label x:Name="bestUser1" Content="1. ---" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="bestUser2" Content="2. ---" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="bestUser3" Content="3. ---" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="bestUser4" Content="4. ---" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="bestUser5" Content="5. ---" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        
     </Grid>
 </Window>

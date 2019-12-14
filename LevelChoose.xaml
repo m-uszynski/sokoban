@@ -1,0 +1,15 @@
+﻿<Window x:Class="SokobanGraph.LevelChoose"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SokobanGraph"
+        mc:Ignorable="d"
+        Title="LevelChoose" Height="300" Width="300" Background="#FF73AAB6">
+    <Grid VerticalAlignment="Center">
+        <Label x:Name="welcomeLabel" Content="Label" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <ScrollViewer Height="Auto" Margin="0,40,0,0" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto">
+            <Canvas x:Name="canvas" Width="120" Height="Auto" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
